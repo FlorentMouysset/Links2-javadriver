@@ -59,9 +59,7 @@ public class ExampleSaveData {
 		Experiment exp = new Experiment();
 		exp.setExperimentName(EXP_NAME);
 		Map<String, Object> attributeMapExp = new HashMap<>();
-		Configuration conf = new Configuration();
-		conf.setConfName("MyConf1");
-		conf.setProfile(Enum_Profile.DEBUG);
+		Configuration conf = new Configuration("MyConf1", Enum_Profile.DEBUG);
 		attributeMapExp.put("Configuration", conf);
 		attributeMapExp.put("Description", "Anthill simulation - test for links data structure");
 		attributeMapExp.put("Version", "0.1");

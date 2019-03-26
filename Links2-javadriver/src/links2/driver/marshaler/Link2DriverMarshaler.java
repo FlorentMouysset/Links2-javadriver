@@ -15,7 +15,7 @@ public class Link2DriverMarshaler extends Links2Driver {
 	public static void marshalling(LinksConnection connection, Experiment experiment, MarshallingMode marshallingMode) {
 		MongoCollection<?> dbCollectionExp =
 		 connection.getOrCreateExperiment(experiment.getExperimentName(),
-		 MarshallingMode.OVERRIDE_EXP_IF_EXISTING.equals(marshallingMode));
+						MarshallingMode.OVERRIDE_EXP_IF_EXISTING == marshallingMode);
 		
 		MongoCollection<Experiment> collection = dbCollectionExp.withDocumentClass(Experiment.class)
 				.withCodecRegistry(jacksonCodecRegistry);
