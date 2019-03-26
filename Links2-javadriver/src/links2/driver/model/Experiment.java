@@ -1,5 +1,6 @@
 package links2.driver.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,11 +36,11 @@ public class Experiment {
 	}
 
 	public List<Snapshot> getSnapshots() {
-		return snapshots;
+		return new ArrayList<>(snapshots);
 	}
 
 	public void setSnapshots(List<Snapshot> snapshots) {
-		this.snapshots = snapshots;
+		this.snapshots = new ArrayList<>(snapshots);
 	}
 
 }

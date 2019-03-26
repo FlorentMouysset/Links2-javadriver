@@ -1,5 +1,6 @@
 package links2.driver.model;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -17,19 +18,19 @@ public class Snapshot {
 	private Map<String, Object> attributeMap;
 
 	public Set<Entity> getEntities() {
-		return entities;
+		return new HashSet<>(entities);
 	}
 
 	public void setEntities(Set<Entity> entities) {
-		this.entities = entities;
+		this.entities = new HashSet<>(entities);
 	}
 
 	public Set<Relation> getRelations() {
-		return relations;
+		return new HashSet<>(relations);
 	}
 
 	public void setRelations(Set<Relation> relations) {
-		this.relations = relations;
+		this.relations = new HashSet<>(relations);
 	}
 
 	public Long getSnapshotNumber() {
