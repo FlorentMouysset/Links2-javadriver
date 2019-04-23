@@ -17,8 +17,17 @@ public class Snapshot {
 	private Set<Relation> relations;
 	private Map<String, Object> attributeMap;
 
+	public Snapshot() {
+		this.entities = new HashSet<>();
+		this.relations = new HashSet<>();
+	}
+
 	public Set<Entity> getEntities() {
 		return new HashSet<>(entities);
+	}
+
+	public void addEntity(Entity entity) {
+		this.entities.add(entity);
 	}
 
 	public void setEntities(Set<Entity> entities) {
@@ -27,6 +36,10 @@ public class Snapshot {
 
 	public Set<Relation> getRelations() {
 		return new HashSet<>(relations);
+	}
+
+	public void addRelation(Relation relation) {
+		this.relations.add(relation);
 	}
 
 	public void setRelations(Set<Relation> relations) {

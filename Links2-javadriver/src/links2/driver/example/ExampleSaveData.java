@@ -24,9 +24,9 @@ public class ExampleSaveData {
 
 	public static void main(String[] args) {
 		LinksConnection connexion = LocalLinksConnection.getLocalConnexion();
-		
+
 		Experiment exp = createExperiment();
-		
+
 		Snapshot s = new Snapshot();
 		s.setSnapshotNumber(0L);
 		Map<String, Entity> entities = getEntities();
@@ -53,11 +53,11 @@ public class ExampleSaveData {
 		Link2DriverMarshaler.marshalling(connexion, exp, MarshallingMode.OVERRIDE_EXP_IF_EXISTING);
 
 		connexion.close();
+        System.out.println("Save ending");
 	}
 
 	private static Experiment createExperiment() {
-		Experiment exp = new Experiment();
-		exp.setExperimentName(EXP_NAME);
+		Experiment exp = new Experiment(EXP_NAME);
 		Map<String, Object> attributeMapExp = new HashMap<>();
 		Configuration conf = new Configuration("MyConf1", Enum_Profile.DEBUG);
 		attributeMapExp.put("Configuration", conf);
@@ -70,21 +70,10 @@ public class ExampleSaveData {
 	private static Map<String, Relation> getRelations() {
 		Map<String, Relation> result = new HashMap<>();
 
-		Relation r = new Relation();
-		r.setIsOriented(false);
-		r.setNodeAid(BASE_AGENT_ID + 4);
-		r.setNodeBid(BASE_AGENT_ID + 5);
-		r.setRelationID("fight1");
-		r.setType("Fight");
+		Relation r = new Relation("fight1", BASE_AGENT_ID + 4, BASE_AGENT_ID + 5, false, "Fight");
 		result.put("fight1", r);
 
-		r = new Relation();
-		r.setIsOriented(true);
-		r.setNodeAid(BASE_AGENT_ID + 2);
-		r.setNodeBid(BASE_AGENT_ID + 1);
-		r.setRelationID("helpping1");
-		r.setType("Help");
-
+		r = new Relation("helpping1", BASE_AGENT_ID + 2, BASE_AGENT_ID + 1, true, "Help");
 		result.put("helpping1", r);
 
 		return result;
@@ -126,9 +115,7 @@ public class ExampleSaveData {
 	}
 
 	private static Entity createEntity(String type, String entityID, String name, int health, String role) {
-		Entity e = new Entity();
-		e.setEntityID(entityID);
-		e.setType(type);
+		Entity e = new Entity(entityID, type);
 		Map<String, Object> attr = new HashMap<>();
 		attr.put("name", name);
 		attr.put(HEALTH_ATRIBUTE, health);

@@ -4,19 +4,28 @@ import com.mongodb.MongoClient;
 
 public class LocalLinksConnection extends LinksConnection {
 
-	private static LocalLinksConnection connexion;
+    /**
+     * The name of the link2 data base used by default.
+     */
+    public static final String          DEFAULT_DB_NAME    = "links2";
+    private static final int            DEFAULT_MONGO_PORT = 27017;
+    private static LocalLinksConnection connexion;
 
-	private LocalLinksConnection() {
+    private LocalLinksConnection(String dbName) {
 		mongoClient = null;
-		mongoClient = new MongoClient("localhost", 27017);
-		db = mongoClient.getDatabase("links2");
+		mongoClient = new MongoClient("localhost", DEFAULT_MONGO_PORT);
+        db = mongoClient.getDatabase(dbName);
 	}
 
 	public static LocalLinksConnection getLocalConnexion() {
-		if (null == connexion) {
-			connexion = new LocalLinksConnection();
-		}
-		return connexion;
+        return getLocalConnexion(DEFAULT_DB_NAME);
 	}
+
+    public static LocalLinksConnection getLocalConnexion(String dbName) {
+        if (null == connexion) {
+            connexion = new LocalLinksConnection(dbName);
+        }
+        return connexion;
+    }
 
 }

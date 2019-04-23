@@ -9,8 +9,8 @@ import links2.driver.model.Snapshot;
 
 public class Link2DriverMarshaler extends Links2Driver {
 
-	private Link2DriverMarshaler() {
-	}
+    private Link2DriverMarshaler() {
+    }
 
 	public static void marshalling(LinksConnection connection, Experiment experiment, MarshallingMode marshallingMode) {
 		MongoCollection<?> dbCollectionExp =

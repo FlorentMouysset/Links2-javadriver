@@ -10,6 +10,25 @@ public class Relation {
 	private Boolean isOriented;
 	private String type;
 
+	public Relation(String relationID, Entity entity1, Entity entity2, boolean isOriented, String type) {
+		this.relationID = relationID;
+		this.nodeAid = entity1.getEntityID();
+		this.nodeBid = entity2.getEntityID();
+		this.isOriented = isOriented;
+		this.type = type;
+	}
+
+	public Relation(String relationID, String nodeAid, String nodeBid, boolean isOriented, String type) {
+		this.relationID = relationID;
+		this.nodeAid = nodeAid;
+		this.nodeBid = nodeBid;
+		this.isOriented = isOriented;
+		this.type = type;
+	}
+
+	public Relation() {
+	}
+
 	// private Attri
 	public String getRelationID() {
 		return relationID;

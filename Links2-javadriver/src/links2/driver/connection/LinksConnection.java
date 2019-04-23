@@ -21,8 +21,9 @@ public abstract class LinksConnection {
 
 	public void removeExperiment(String experimentName) {
 		MongoCollection<Document> expToRm = db.getCollection(experimentName);
-		if (null != expToRm)
+        if (null != expToRm) {
 			expToRm.drop();
+        }
 	}
 
 	public void close() {

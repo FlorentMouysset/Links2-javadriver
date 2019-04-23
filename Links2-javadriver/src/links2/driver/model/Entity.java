@@ -11,6 +11,11 @@ public class Entity {
 	private String type;
 	private Map<String, Object> attributeMap;
 
+	public Entity(String entityID, String type) {
+		this.entityID = entityID;
+		this.type = type;
+	}
+
 	public String getEntityID() {
 		return entityID;
 	}
