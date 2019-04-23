@@ -7,8 +7,17 @@ links2_javadriver allows to :
 *   Retreive Links experiment from MongoDB 
 
 ## Where to get it
+###Source code
 The source code is currently hosted on GitHub at:
 https://github.com/FlorentMouysset/Links2-javadriver
+
+### Jars
+*   Direct link
+
+The latest current version is 0.1 available here:
+https://cloud.irit.fr/index.php/s/JkVwmTVnQZsEmxF
+
+*   Maven
 
 TODO
 
