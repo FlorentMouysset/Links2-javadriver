@@ -83,7 +83,7 @@ LinksConnection connection = LocalLinksConnection.getLocalConnexion();
 Experiment experiment = Link2DriverUnmarshaler.unmarshalling(connection, "My experimentName");
         
 //Get the list of snapshots and get the first one
-List<Snapshot> snapshots = exp.getSnapshots();
+List<Snapshot> snapshots = experiment.getSnapshots();
 Snapshot firstSnapshot = snapshots.get(0);
 
 //From the snapshot get the set of entities and display their ID

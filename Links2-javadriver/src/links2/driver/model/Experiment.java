@@ -19,6 +19,10 @@ public class Experiment {
 	@JsonIgnore
 	private List<Snapshot> snapshots;
 
+    public Experiment() {
+        this.snapshots = new ArrayList<>();
+    }
+
 	public Experiment(String experimentName) {
 		this.experimentName = experimentName;
 		this.snapshots = new ArrayList<>();

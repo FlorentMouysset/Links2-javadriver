@@ -11,6 +11,9 @@ public class Entity {
 	private String type;
 	private Map<String, Object> attributeMap;
 
+    public Entity() {
+    }
+
 	public Entity(String entityID, String type) {
 		this.entityID = entityID;
 		this.type = type;
