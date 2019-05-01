@@ -1,23 +1,21 @@
 package links2.driver.example;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 import links2.driver.connection.LinksConnection;
 import links2.driver.connection.LocalLinksConnection;
-import links2.driver.marshaler.Link2DriverMarshaler;
+import links2.driver.marshaler.Link2DriverSnapshotRecorder;
 import links2.driver.marshaler.MarshallingMode;
 import links2.driver.model.Entity;
 import links2.driver.model.Experiment;
 import links2.driver.model.Relation;
 import links2.driver.model.Snapshot;
 
-public class ExampleSaveData {
+public class ExampleAutoSaveData {
 
-	public static final String EXP_NAME = "exp_Anthill_1";
+    public static final String  EXP_NAME        = "exp_Anthill_2";
 	private static final String HEALTH_ATRIBUTE = "health";
 	private static final String BASE_AGENT_ID = "Agent ";
 
@@ -25,36 +23,54 @@ public class ExampleSaveData {
 	public static void main(String[] args) {
 		LinksConnection connexion = LocalLinksConnection.getLocalConnexion();
 
-		Experiment exp = createExperiment();
+		Experiment experiment = createExperiment();
 
-		Snapshot s = new Snapshot();
-		s.setSnapshotNumber(0L);
-		Map<String, Entity> entities = getEntities();
-		s.setEntities(new HashSet<>(entities.values()));
-		Map<String, Relation> relation = getRelations();
-		s.setRelations(new HashSet<>(relation.values()));
-		Map<String, Object> attributeMapSnap1 = new HashMap<>();
-		attributeMapSnap1.put("Encontred exception", "Unhandle NCS !");
-		s.setAttributeMap(attributeMapSnap1);
+        // existing snapshots are saved and...
+        Link2DriverSnapshotRecorder snapshotRecorder = new Link2DriverSnapshotRecorder(connexion, experiment,
+                MarshallingMode.OVERRIDE_EXP_IF_EXISTING);
 
-		Snapshot s2 = new Snapshot();
-		s2.setSnapshotNumber(1L);
-		entities.remove(BASE_AGENT_ID + 5);
-		entities.get(BASE_AGENT_ID + 1).getAttributeMap().put(HEALTH_ATRIBUTE, 32);
-		entities.get(BASE_AGENT_ID + 2).getAttributeMap().put(HEALTH_ATRIBUTE, 89);
-		s2.setEntities(new HashSet<>(entities.values()));
-		relation.remove("fight1");
-		s2.setRelations(new HashSet<>(relation.values()));
+        // ... any new added snapshot is saved
+        Snapshot s = createSnapshot1();
+        snapshotRecorder.accept(s);
 
-		List<Snapshot> snapshots = new ArrayList<>();
-		snapshots.add(s);
-		snapshots.add(s2);
-		exp.setSnapshots(snapshots);
-		Link2DriverMarshaler.marshalling(connexion, exp, MarshallingMode.OVERRIDE_EXP_IF_EXISTING);
+        // ...
+        Snapshot s2 = createSnapshot2();
+        snapshotRecorder.accept(s2);
 
+        //adding snapshot to experiment and... save is useless
+        experiment.addSnapshot(s);
+        
+      
+        // To closing the connection you can both use
 		connexion.close();
-        System.out.println("Save ending");
+		//or 
+        snapshotRecorder.closeConnection();
+
+        // adding snapshot after closing the connection throw an exception
+        System.out.println("Ending");
 	}
+
+    private static Snapshot createSnapshot1() {
+        Snapshot s = new Snapshot();
+        s.setSnapshotNumber(0);
+        Map<String, Entity> entities = getEntities();
+        s.setEntities(new HashSet<>(entities.values()));
+        Map<String, Relation> relation = getRelations();
+        s.setRelations(new HashSet<>(relation.values()));
+        Map<String, Object> attributeMapSnap1 = new HashMap<>();
+        attributeMapSnap1.put("Encontred exception", "Unhandle NCS !");
+        s.setAttributeMap(attributeMapSnap1);
+        return s;
+    }
+
+    private static Snapshot createSnapshot2() {
+        Snapshot s2 = createSnapshot1();
+        s2.setSnapshotNumber(1);
+        s2.removeEntity(BASE_AGENT_ID + 5); // "fight1" will be automatically removed
+        s2.setEntityAttribute(BASE_AGENT_ID + 1, HEALTH_ATRIBUTE, 32);
+        s2.setEntityAttribute(BASE_AGENT_ID + 2, HEALTH_ATRIBUTE, 89);
+        return s2;
+    }
 
 	private static Experiment createExperiment() {
 		Experiment exp = new Experiment(EXP_NAME);
@@ -117,10 +133,10 @@ public class ExampleSaveData {
 	private static Entity createEntity(String type, String entityID, String name, int health, String role) {
 		Entity e = new Entity(entityID, type);
 		Map<String, Object> attr = new HashMap<>();
-		attr.put("name", name);
 		attr.put(HEALTH_ATRIBUTE, health);
 		attr.put("role", role);
 		e.setAttributeMap(attr);
+        e.setAttribute(Entity.ATTRIBUTE_NAME, name);
 		return e;
 	}
 

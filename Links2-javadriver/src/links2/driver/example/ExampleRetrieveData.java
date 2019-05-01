@@ -12,7 +12,7 @@ public class ExampleRetrieveData {
 
 		LinksConnection connexion = LocalLinksConnection.getLocalConnexion();
 		
-		Experiment exp = Link2DriverUnmarshaler.unmarshalling(connexion, ExampleSaveData.EXP_NAME);
+		Experiment exp = Link2DriverUnmarshaler.unmarshalling(connexion, ExampleAutoSaveData.EXP_NAME);
 		
 		System.out.println(exp.getExperimentName());
 		System.out.println(exp.getAttributeMap());
