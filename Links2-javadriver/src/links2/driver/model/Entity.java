@@ -1,23 +1,27 @@
 package links2.driver.model;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
 public class Entity {
 
+    public static final String  ATTRIBUTE_NAME = "name";
 	private String entityID;
 	private String type;
 	private Map<String, Object> attributeMap;
 
-    public Entity() {
+    public Entity(String entityID, String type) {
+        this();
+        this.entityID = entityID;
+        this.type = type;
     }
 
-	public Entity(String entityID, String type) {
-		this.entityID = entityID;
-		this.type = type;
-	}
+    public Entity() {
+        attributeMap = new HashMap<>();
+    }
 
 	public String getEntityID() {
 		return entityID;
@@ -36,12 +40,19 @@ public class Entity {
 	}
 
 	public Map<String, Object> getAttributeMap() {
-		return attributeMap;
+        return new HashMap<>(attributeMap);
 	}
 
 	public void setAttributeMap(Map<String, Object> attributeMap) {
-		this.attributeMap = attributeMap;
+        this.attributeMap = new HashMap<>(attributeMap);
 	}
+
+    public void setAttribute(String attributeName, Object attributeValue) {
+        if (null == attributeMap) {
+            attributeMap = new HashMap<>();
+        }
+        attributeMap.put(attributeName, attributeValue);
+    }
 
 	@Override
 	public String toString() {
