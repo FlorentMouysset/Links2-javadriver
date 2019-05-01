@@ -41,7 +41,7 @@ public class ExampleAutoSaveData {
         experiment.addSnapshot(s);
         
       
-        // To closing the connection you can both use
+        // To close the connection, you can use one of the two methods:
 		connexion.close();
 		//or 
         snapshotRecorder.closeConnection();
