@@ -20,7 +20,7 @@ public class Link2DriverUnmarshaler extends Links2Driver {
 
 	public static Experiment unmarshalling(LinksConnection connection, String experimentName) {
 		MongoCollection<?> dbCollectionExp =
-				connection.getOrCreateExperiment(experimentName, false);
+				connection.getOrCreateCollection(experimentName, false);
 		
 		MongoCollection<Experiment> collection = dbCollectionExp.withDocumentClass(Experiment.class)
 				.withCodecRegistry(jacksonCodecRegistry);

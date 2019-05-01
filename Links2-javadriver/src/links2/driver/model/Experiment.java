@@ -28,7 +28,13 @@ public class Experiment {
 		this.snapshots = new ArrayList<>();
 	}
 
-	public String getExperimentName() {
+    protected Experiment(Experiment experiment) {
+        this.experimentName = experiment.experimentName;
+        this._id = experiment._id;
+        this.attributeMap = experiment.attributeMap;
+    }
+
+    public String getExperimentName() {
 		return experimentName;
 	}
 
@@ -55,5 +61,13 @@ public class Experiment {
 	public void addSnapshot(Snapshot snapshot) {
 		this.snapshots.add(snapshot);
 	}
+
+    public void addSnapshots(List<Snapshot> snapshots) {
+        this.snapshots.addAll(snapshots);
+    }
+
+    public void clearSnapshots() {
+        snapshots.clear();
+    }
 
 }
