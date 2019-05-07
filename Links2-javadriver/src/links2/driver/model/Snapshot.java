@@ -21,6 +21,7 @@ public class Snapshot {
 	public Snapshot() {
         this.entities = new HashMap<>();
         this.relations = new HashMap<>();
+        this.attributeMap = new HashMap<>();
 	}
 
 	public Set<Entity> getEntities() {
@@ -66,9 +67,6 @@ public class Snapshot {
 	}
 
     public void setAttribute(String attributeName, String attributeValue) {
-        if (null == attributeMap) {
-            attributeMap = new HashMap<>();
-        }
         attributeMap.put(attributeName, attributeValue);
     }
 
